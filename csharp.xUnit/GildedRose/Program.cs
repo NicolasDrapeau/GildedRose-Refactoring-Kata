@@ -9,19 +9,19 @@ public class Program
     {
         Console.WriteLine("OMGHAI!");
 
-        IList<Item> items = new List<Item>
-        {
-            new Item { Name = Name.Dexterity, SellIn = 10, Quality = 20 },
-            new Item { Name = Name.AgedBrie, SellIn = 2, Quality = 0 },
-            new Item { Name = Name.Elixir, SellIn = 5, Quality = 7 },
-            new Item { Name = Name.Sulfuras, SellIn = 0, Quality = 80 },
-            new Item { Name = Name.Sulfuras, SellIn = -1, Quality = 80 },
-            new Item { Name = Name.Backstage, SellIn = 15, Quality = 20 },
-            new Item { Name = Name.Backstage, SellIn = 10, Quality = 49 },
-            new Item { Name = Name.Backstage, SellIn = 5, Quality = 49 },
+        IList<Item> items =
+        [
+            new (GildName.Dexterity, 10, 20),
+            new (GildName.AgedBrie, 2,  0 ),
+            new (GildName.Elixir, 5, 7 ),
+            new (GildName.Sulfuras,  0, 80 ),
+            new (GildName.Sulfuras, -1,  80 ),
+            new (GildName.Backstage, 15, 20 ),
+            new (GildName.Backstage, 10, 49 ),
+            new (GildName.Backstage, 5, 49 ),
             // this conjured item does not work properly yet
-            new Item { Name = Name.Conjured, SellIn = 3, Quality = 6 }
-        };
+            new (GildName.Conjured, 3, 6 )
+        ];
 
         var app = new GildedRose(items);
 

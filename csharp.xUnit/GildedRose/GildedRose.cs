@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace GildedRoseKata;
 
@@ -15,72 +16,26 @@ public class GildedRose
     {
         foreach (var t in Items)
         {
-            if (t.Name != Name.AgedBrie && t.Name != Name.Backstage)
-            {
-                if (t.Quality > 0)
-                {
-                    if (t.Name != Name.Sulfuras)
-                    {
-                        t.Quality--;
-                    }
-                }
-            }
-            else
-            {
-                if (t.Quality < 50)
-                {
-                    t.Quality = t.Quality + 1;
+            t.IncrementQuality(() => t.Name == GildName.AgedBrie);
 
-                    if (t.Name == Name.Backstage)
-                    {
-                        if (t.SellIn < 11)
-                        {
-                            if (t.Quality < 50)
-                            {
-                                t.Quality = t.Quality + 1;
-                            }
-                        }
-
-                        if (t.SellIn < 6)
-                        {
-                            if (t.Quality < 50)
-                            {
-                                t.Quality = t.Quality + 1;
-                            }
-                        }
-                    }
-                }
+            if (t.Name == GildName.Backstage)
+            {
+                t.IncrementQuality();
+                t.IncrementQuality(() => t.SellIn < 11);
+                t.IncrementQuality(() => t.SellIn < 6);
             }
 
-            if (t.Name != Name.Sulfuras)
+            t.DecrementQuality();
+
+
+            if (t.DecrementSellIn() >= 0)
             {
-                t.SellIn = t.SellIn - 1;
+                continue;
             }
 
-            if (t.SellIn < 0)
-            {
-                if (t.Name != Name.AgedBrie)
-                {
-                    if (t.Name != Name.Backstage)
-                    {
-                        if (t.Quality > 0 && t.Name != Name.Sulfuras)
-                        {
-                            t.Quality = t.Quality - 1;
-                        }
-                    }
-                    else
-                    {
-                        t.Quality = t.Quality - t.Quality;
-                    }
-                }
-                else
-                {
-                    if (t.Quality < 50)
-                    {
-                        t.Quality ++;
-                    }
-                }
-            }
+            t.IncrementQuality(() => t.Name == GildName.AgedBrie);
+            t.InitalizeQuality();
+            t.DecrementQuality();
         }
     }
 }
